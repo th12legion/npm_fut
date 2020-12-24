@@ -1,0 +1,11 @@
+{
+  "name": "fut",
+  "version": "1.0.0",
+  "description": "JS Tools for node app",
+  "author":"th12legion",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {}
+}
