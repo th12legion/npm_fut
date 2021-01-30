@@ -59,7 +59,7 @@ var beep = async function(){
 //------------ Работа с запросами ------------
 var send_request = async function(params){
 	params = (typeof params=="undefined")?{}:params;
-	let defalt_params = {"host": null, "path": "", "method": "GET", "headers": null, "time": 2.5, "show_error": false};
+	let defalt_params = {"host": null, "path": "", "method": "GET", "headers": null, "time": 2.5, "show_error": false, "data": ""};
 	
 	for(let key in defalt_params){
 		if(typeof params[key]=="undefined"){
@@ -67,7 +67,7 @@ var send_request = async function(params){
 		}
 	}
 	
-	let {host, path, method, headers, time} = params;
+	let {host, path, method, headers, time, data} = params;
 	
 	if(host===null){
 		return null;
@@ -103,14 +103,18 @@ var send_request = async function(params){
                 console.log("Warning:", error);
             }
             resolve(null);
-        })
+        });
 		
 		req.setTimeout(time*1000, () => {
             if(params["show_error"]===true){
                 console.log("Warning:", "Обрыв соеденения по таймауту");
             }
             req.abort();
-        })
+        });
+
+        if (method=="POST"){
+            req.write(data);
+        }
         
         req.end()
     });
